@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>KAKASHKOEDNYA</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; background: #2b2623; color: #fff; }
+
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 220px;
+      background: #1f1a17;
+      border-right: 4px solid #6b3e1e;
+      padding: 20px 10px;
+    }
+
+    .sidebar button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      background: none;
+      border: none;
+      color: #c98b4a;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .sidebar button:hover { background: #2a211c; }
+
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+    }
+
+    .logo { text-align: center; margin-bottom: 20px; }
+    .logo img { max-width: 300px; }
+
+    .section { display: none; }
+    .section.active { display: block; animation: fade 0.4s ease; }
+
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+    .big { font-size: 24px; font-weight: bold; margin: 10px 0; }
+    .yellow { color: #ffd000; }
+    .red { color: #ff5050; }
+    .green { color: #55ff55; }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: #1e1a17;
+      color: #fff;
+      border: 1px solid #6b3e1e;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    .btn { padding: 10px 15px; margin: 5px; border: none; cursor: pointer; font-weight: bold; }
+
+    .donate-title { text-align: center; font-size: 40px; color: #55ff55; opacity: 0; transform: scale(0.8); transition: 0.4s; }
+    .donate-title.show { opacity: 1; transform: scale(1); }
+
+    .donate-btn {
+      display: block;
+      margin: 40px auto;
+      padding: 15px 30px;
+      font-size: 22px;
+      font-weight: bold;
+      background: #55ff55;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      animation: blink 1s infinite alternate;
+    }
+
+    @keyframes blink { from { background: #55ff55; } to { background: #ffffff; } }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: #2b2623;
+      width: 520px;
+      border: 2px solid #6b3e1e;
+      animation: fade 0.3s;
+    }
+
+    .modal-header {
+      background: #1f1a17;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close { cursor: pointer; font-size: 20px; }
+    .modal-body { padding: 15px; white-space: pre-line; }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <button onclick="showSection('about')">О нас</button>
+  <button onclick="showSection('schedule')">Расписание хоста бота</button>
+  <button onclick="showSection('translate')">Переводчик на рулонский</button>
+  <button onclick="showDonates()">Донаты</button>
+</div>
+
+<div class="content">
+  <div class="logo">
+    <a href="https://discord.gg/wfHfKrEXzy" target="_blank">
+      <img src="https://media.discordapp.net/attachments/1421220046490828810/1444813387283435680/raw_1_-removebg-preview_1.png?ex=69622612&is=6960d492&hm=8b45554c6ef1534cb9e71eb1a380552ac6687aa65c386df7344cca626ef68b82&=&format=webp&quality=lossless&width=675&height=675" alt="KAKASHKOEDNYA" />
+    </a>
+  </div>
+
+  <div id="about" class="section active">
+    <p>Мы имперо социальная какашко община, которая занимается движением прогресса в сфере дискорд ботов, а также сервер для общение</p>
+  </div>
+
+  <div id="schedule" class="section">
+    <div class="big yellow">Понедельник! Будние / Не каникулы</div>
+    <div class="big red">14:00 – 15:00 включение</div>
+    <div class="big red">16:00 – 18:00 выключение</div>
+    <hr>
+    <div class="big green">Суббота выходные</div>
+    <div class="big yellow">15:00 – 16:00 включение</div>
+    <div class="big yellow">20:00 – 22:00 выключение</div>
+    <hr>
+    <div class="big red">ОТ 18:00 ПРЕДПОЛОЖИТЕЛЬНЫЙ ГРАФИК НЕ ДЕЙСТВУЕТ!</div>
+  </div>
+
+  <div id="translate" class="section">
+    <textarea id="input" placeholder="Введите текст"></textarea>
+    <button class="btn" onclick="toKakashko()">Перевести 💩</button>
+    <button class="btn" onclick="fromKakashko()">Обратно</button>
+    <textarea id="output" placeholder="Результат"></textarea>
+  </div>
+
+  <div id="donate" class="section">
+    <div id="donateTitle" class="donate-title">ДОНАТЫ</div>
+    <button class="donate-btn" onclick="openModal()">Задонатить</button>
+  </div>
+</div>
+
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span>Реквизиты</span>
+      <span class="close" onclick="hideModal()">✖</span>
+    </div>
+    <div class="modal-body">
+РЕКВИЗИТЫ ИГРЫ:
+
+Roblox: Pls donate — Vania2731
+Steam: Gift — irina3316
+
+РЕКВИЗИТЫ:
+
+IBAN: GB82 WEST 1234 5698 7654 32
+BIC/SWIFT: DEUTDEFF
+Расчётный счёт: 40702810900000000001
+
+Visa: 4242 4612 1294 3827 — срок: 06/27
+    </div>
+  </div>
+</div>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function showDonates() {
+    showSection('donate');
+    setTimeout(() => document.getElementById('donateTitle').classList.add('show'), 100);
+  }
+
+  function openModal() { document.getElementById('modal').style.display = 'flex'; }
+  function hideModal() { document.getElementById('modal').style.display = 'none'; }
+  function closeModal(e) { if (e.target.id === 'modal') hideModal(); }
+
+  const reverse = {"ʩ":"А","꩜":"Б","ʭ":"В","Ϟ":"Г","ᶑ":"Д","Ɽ":"Е","∽":"Ж","ʮ":"З","🧻":"И","ʅ":"Й","꤬":"К","ʪ":"Л","ʯ":"М","ʡ":"Н","ʢ":"О","ꩰ":"П","ꩶ":"Р","ꩴ":"С","ʥ":"Т","ʮ͢":"У","ʬ":"Ф","ʮ̇":"Х","ꩲ":"Ц","ʩ̇":"Ч","ʭ͜":"Ш","꩸":"Щ","💩":"Ы","ʥ̇":"Э","ʬ͜":"Ю","ꩾ":"Я"};
+  const forward = {}; for (const k in reverse) forward[reverse[k]] = k;
+  function toKakashko(){ let t=input.value.toUpperCase(),r=''; for(const c of t) r+=forward[c]||c; output.value=r; }
+  function fromKakashko(){ let t=output.value,r=''; for(const c of t) r+=reverse[c]||c; output.value=r; }
+</script>
+</body>
+</html>
